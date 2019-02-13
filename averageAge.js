@@ -46,6 +46,10 @@ function isNumeric(number) {
     return !isNaN(parseFloat(number)) && isFinite(number);
 }
 
+function isFloat(number){
+    return Number(number)===number && number%1!==0;
+}
+
 /**
  * The function returns the average age of man
  * @param {Array} people 
@@ -67,9 +71,12 @@ function calculateMenAverageAge(people, century) {
         console.log('Two arguments were passed to the function, but they have another type(not [] and number). The function can\'t use these arguments!');
     }
     else{
+        if(isFloat(century)){
+            console.log('The century argument is equal type of float. It must be integer!');
+        }
         //figures out the average age of man 
         //without century
-        if(century === undefined){
+        else if(century === undefined){
             //for debugging
             console.log('century wasn\'t passed');
             amountOfYearsLived = Object.keys(people).reduce((previous,key)=>{
@@ -95,4 +102,3 @@ function calculateMenAverageAge(people, century) {
 }
 
 console.log(calculateMenAverageAge(people,21));
-
