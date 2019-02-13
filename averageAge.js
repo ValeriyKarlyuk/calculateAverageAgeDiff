@@ -42,6 +42,10 @@ const people = [
     {"name": "Jacobus Bernardus van Brussel", "sex": "m", "born": 1736, "died": 1816, "father": "Jan van Brussel", "mother": "Elisabeth Haverbeke"}
 ];
 
+function isNumeric(number) {
+    return !isNaN(parseFloat(number)) && isFinite(number);
+}
+
 /**
  * The function returns the average age of man
  * @param {Array} people 
@@ -58,7 +62,7 @@ function calculateMenAverageAge(people, century) {
     if(people === undefined && century === undefined){
         //for debugging
         console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of man');
-    }else if( !Array.isArray(people) && typeof(century) !== "number" ){
+    }else if( !Array.isArray(people) || !isNumeric(century)){
         //for debugging
         console.log('Two arguments were passed to the function, but they have another type(not [] and number). The function can\'t use these arguments!');
     }
@@ -90,5 +94,5 @@ function calculateMenAverageAge(people, century) {
     }
 }
 
-console.log(calculateMenAverageAge(people,20));
+console.log(calculateMenAverageAge(people,21));
 
