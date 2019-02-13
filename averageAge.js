@@ -51,24 +51,23 @@ function isFloat(number){
 }
 
 /**
- * The function returns the average age of man
+ * The function returns the average age of men
  * @param {Array} people 
  * @param {number} century 
- * @return {number} averageAge
+ * @return {number} averageAgeOfMen
  */
 function calculateMenAverageAge(people, century) {
     //this variable contains total amount of years lived(difference between died and born)
     let amountOfYearsLived = 0;
-    let length = people.length;
+    let numberOfMen = 0;
     //create variable which contains the number of men who lived in passed century
     let lengthOfCentury = 0;
-    let menAverageAge = 0;
     if(people === undefined && century === undefined){
         //for debugging
-        console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of man');
-    }else if( !Array.isArray(people) || !isNumeric(century)){
+        console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of men');
+    }else if( !Array.isArray(people) && !isNumeric(century)){
         //for debugging
-        console.log('Two arguments were passed to the function, but they have another type(not [] and number). The function can\'t use these arguments!');
+        console.log('Two arguments were passed to the function, but one of them(or they) has/have another type(not [] and number). The function can\'t use these arguments!');
     }
     else{
         if(isFloat(century)){
@@ -79,26 +78,111 @@ function calculateMenAverageAge(people, century) {
         else if(century === undefined){
             //for debugging
             console.log('century wasn\'t passed');
-            amountOfYearsLived = Object.keys(people).reduce((previous,key)=>{
+            numberOfMen = Object.keys(people)
+            .filter((key)=>{
+                return people[key].sex === 'm';
+            });
+            amountOfYearsLived = Object.keys(people)
+            .filter((key)=>{
+                return people[key].sex === 'm';
+            })
+            .reduce((previous,key)=>{
                 return previous + (people[key].died - people[key].born);
             },0);
-            return `The average age of men is equal ${(amountOfYearsLived/length).toFixed(1)}`;
+            return `The average age of men is equal ${(amountOfYearsLived/numberOfMen.length).toFixed(2)}`;
         }else{
         //if century was passed
             //for debugging
             console.log('century was passed');
             lengthOfCentury = Object.keys(people).filter((key)=>{
-                return Math.ceil(people[key].died/100)===century;
+                return Math.ceil(people[key].died/100)===century 
+            })
+            .filter((key)=>{
+                return people[key].sex === 'm';
             });
-            amountOfYearsLived = Object.keys(people).filter((key)=>{
-                return Math.ceil(people[key].died/100)===century;
+            amountOfYearsLived = Object.keys(people)
+            .filter((key)=>{
+                return Math.ceil(people[key].died/100)===century 
+            })
+            .filter((key)=>{
+                return people[key].sex === 'm';
             })
             .reduce((previous,key)=>{
                 return previous + (people[key].died - people[key].born);
             },0)
-            return `The average age of men who lived in the ${century}th century is equal ${(amountOfYearsLived/lengthOfCentury.length).toFixed(1)}`;
+            return `The average age of men who lived in the ${century}th century is equal ${(amountOfYearsLived/lengthOfCentury.length).toFixed(2)}`;
         }
     }
 }
 
-console.log(calculateMenAverageAge(people,21));
+//test block
+// var arr = [{"born": 1535, "died": 1582},{"born": 1542, "died": 1582}]
+// var newArr = Object.keys(arr).filter((key)=>{
+//     return Math.ceil(arr[key].died/100)===16;
+// })
+// .reduce((previous,key)=>{
+//     return previous + (arr[key].died - arr[key].born);
+// },0)
+//console.log(calculateMenAverageAge(people,18));
+// console.log(newArr);
+
+
+/**
+ * calculateWomenAverageAge function which returns the average age of women
+ * @param {Array} people 
+ * @param {boolean} withChildren
+ * @return {number}  averageAgeOfWomen
+ */
+function calculateWomenAverageAge(people,withChildren) {
+    //this variable contains total amount of years lived(difference between died and born)
+    let amountOfYearsLived = 0;
+    let numberOfWomen = 0;
+    //create variable which contains the number of men who lived in passed century
+    let haveChildren = 0;
+    if(people === undefined && withChildren === undefined){
+        //for debugging
+        console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of women');
+    }else if( !Array.isArray(people) && typeof(withChildren) !== 'boolean'){
+        //for debugging
+        console.log('Two arguments were passed to the function, but one of them(or they) has/have another type(not [] and boolean). The function can\'t use these arguments!');
+    }
+    else{
+        //figures out the average age of women 
+        //without children
+        if( withChildren === undefined){
+            //for debugging
+            console.log('withChildren wasn\'t passed');
+            numberOfWomen = Object.keys(people).filter((key)=>{
+                return people[key].sex === 'f';
+            });
+            amountOfYearsLived = Object.keys(people)
+            .filter((key)=>{
+                return people[key].sex === 'f';
+            })
+            .reduce((previous,key)=>{
+                return previous + (people[key].died - people[key].born);
+            },0);
+            return `The average age of women is equal ${(amountOfYearsLived/numberOfWomen.length).toFixed(2)}`;
+        }else{
+        //if withChildren boolean flag was passed
+            //for debugging
+            // console.log('withChildren was passed');
+            // lengthOfCentury = Object.keys(people).filter((key)=>{
+            //     return Math.ceil(people[key].died/100)===century;
+            // });
+            // amountOfYearsLived = Object.keys(people).filter((key)=>{
+            //     return Math.ceil(people[key].died/100)===century;
+            // })
+            // .reduce((previous,key)=>{
+            //     return previous + (people[key].died - people[key].born);
+            // },0)
+            // return `The average age of women who had children equal ${(amountOfYearsLived/lengthOfCentury.length).toFixed(2)}`;
+        }
+    }
+}
+
+// var newArr = Object.keys(people).filter((key)=>{
+//     return people[key].sex === 'f';
+// });
+// console.log(newArr);
+// console.log(calculateWomenAverageAge(people));
