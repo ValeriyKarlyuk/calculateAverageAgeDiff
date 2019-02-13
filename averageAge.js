@@ -75,44 +75,25 @@ function calculateMenAverageAge(people, century) {
             //for debugging
             console.log('century wasn\'t passed');
             const allMen = people
-                .filter((person)=>{
-                    return person.sex === 'm';
-                });
+                .filter(person => person.sex === 'm');
             amountOfYearsLived = allMen
-                .reduce((previous,currentPerson)=>{
-                    return previous + (currentPerson.died - currentPerson.born);
-                },0);
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
             return `The average age of men is equal ${(amountOfYearsLived/allMen.length).toFixed(2)}`;
         }else{
         //if century was passed
             //for debugging
             console.log('century was passed');
             const numberOfMenSearch = people
-                .filter((person)=>{
-                    return Math.ceil(person.died/100)===century 
-                })
-                .filter((person)=>{
-                    return person.sex === 'm';
-                });
+                .filter(person => Math.ceil(person.died/100)===century)
+                .filter(person => person.sex === 'm');
                 const amountOfYearsLived = numberOfMenSearch
-                .reduce((previous,currentPerson)=>{
-                    return previous + (currentPerson.died - currentPerson.born);
-                },0)
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
             return `The average age of men who lived in the ${century}th century is equal ${(amountOfYearsLived/numberOfMenSearch.length).toFixed(2)}`;
         }
     }
 }
 
-//test block
-// var arr = [{"born": 1535, "died": 1582},{"born": 1542, "died": 1582}]
-// var newArr = Object.keys(arr).filter((key)=>{
-//     return Math.ceil(arr[key].died/100)===16;
-// })
-// .reduce((previous,key)=>{
-//     return previous + (arr[key].died - arr[key].born);
-// },0)
 //console.log(calculateMenAverageAge(people));
-// console.log(newArr);
 
 
 /**
@@ -136,13 +117,9 @@ function calculateWomenAverageAge(people,withChildren) {
             //for debugging
             console.log('withChildren wasn\'t passed');
             const allWomen = people
-                .filter((person)=>{
-                    return person.sex === 'f';
-                });
+                .filter(person => person.sex === 'f');
             const amountOfYearsLived = allWomen
-                .reduce((previous,currentPerson)=>{
-                    return previous + (currentPerson.died - currentPerson.born);
-                },0);
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
             return `The average age of women is equal ${(amountOfYearsLived/allWomen.length).toFixed(2)} years`;
         }else{
         //if withChildren boolean flag was passed
@@ -150,23 +127,17 @@ function calculateWomenAverageAge(people,withChildren) {
             console.log('withChildren was passed');
             //the function searches all people who have children
             function hasChildren(personSearch) {
-                const resultOfSearch = people.some((person)=>{
-                    return person.mother === personSearch.name;
-                })
+                const resultOfSearch = people.some(person => person.mother === personSearch.name);
                 return resultOfSearch;
             }
             const allWomen = people
-                .filter((person)=>{
-                    return person.sex === 'f';
-                })
+                .filter(person => person.sex === 'f')
                 .filter(hasChildren)
             const amountOfYearsLived = allWomen
-                .reduce((previous,currentPerson)=>{
-                    return previous + (currentPerson.died - currentPerson.born);
-                },0)
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
             return `The average age of women who had children equal ${(amountOfYearsLived/allWomen.length).toFixed(2)} years`;
         }
     }
 }
 
-console.log(calculateWomenAverageAge(people,true));
+//console.log(calculateWomenAverageAge(people));
