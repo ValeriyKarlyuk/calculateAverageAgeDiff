@@ -50,6 +50,7 @@ function isFloat(number){
     return Number(number)===number && number%1!==0;
 }
 
+
 /**
  * The function returns the average age of men
  * @param {Array} people 
@@ -77,24 +78,23 @@ function calculateMenAverageAge(people, century) {
             const allMen = people
                 .filter(person => person.sex === 'm');
             amountOfYearsLived = allMen
-                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
-            return `The average age of men is equal ${(amountOfYearsLived/allMen.length).toFixed(2)}`;
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0)/allMen.length;
+            return `The average age of men is equal ${(amountOfYearsLived).toFixed(2)}`;
         }else{
-        //if century was passed
+        //if century has been passed
             //for debugging
             console.log('century was passed');
             const numberOfMenSearch = people
-                .filter(person => Math.ceil(person.died/100)===century)
+                .filter(person => Math.ceil(person.died/100) === century)
                 .filter(person => person.sex === 'm');
                 const amountOfYearsLived = numberOfMenSearch
-                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
-            return `The average age of men who lived in the ${century}th century is equal ${(amountOfYearsLived/numberOfMenSearch.length).toFixed(2)}`;
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0)/numberOfMenSearch.length;
+            return `The average age of men who lived in the ${century}th century is equal ${(amountOfYearsLived).toFixed(2)}`;
         }
     }
-}
+};
 
 //console.log(calculateMenAverageAge(people));
-
 
 /**
  * calculateWomenAverageAge function which returns the average age of women
@@ -119,10 +119,10 @@ function calculateWomenAverageAge(people,withChildren) {
             const allWomen = people
                 .filter(person => person.sex === 'f');
             const amountOfYearsLived = allWomen
-                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
-            return `The average age of women is equal ${(amountOfYearsLived/allWomen.length).toFixed(2)} years`;
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0)/allWomen;
+            return `The average age of women is equal ${(amountOfYearsLived).toFixed(2)} years`;
         }else{
-        //if withChildren boolean flag was passed
+        //if withChildren boolean flag has been passed
             //for debugging
             console.log('withChildren was passed');
             //the function searches all people who have children
@@ -134,10 +134,54 @@ function calculateWomenAverageAge(people,withChildren) {
                 .filter(person => person.sex === 'f')
                 .filter(hasChildren)
             const amountOfYearsLived = allWomen
-                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0);
-            return `The average age of women who had children equal ${(amountOfYearsLived/allWomen.length).toFixed(2)} years`;
+                .reduce((previous,currentPerson)=> previous + (currentPerson.died - currentPerson.born),0)/allWomen;
+            return `The average age of women who had children equal ${(amountOfYearsLived).toFixed(2)} years`;
         }
     }
-}
-
+};
 //console.log(calculateWomenAverageAge(people));
+
+/**
+ * The function returns average age difference between all mothers and their children which are in the array
+ * @param {Array} people 
+ * @param {boolean} onlyWithSon
+ * @return {number} 
+ */
+function calculateAverageAgeDiff(people,onlyWithSon){
+    if(people === undefined && onlyWithSon === undefined){
+        //for debugging
+        console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of women');
+    }else if( !Array.isArray(people) && typeof(onlyWithSon) !== 'boolean'){
+        //for debugging
+        console.log('Two arguments were passed to the function, but one of them(or they) has/have another type(not [] and boolean). The function can\'t use these arguments!');
+    }
+    else{
+        //figures out the average age of women 
+        //without son
+        if( onlyWithSon === undefined){
+            //for debugging
+            console.log('onlyWithSon wasn\'t passed');
+            //returns all mothers who has a child(children)
+            const getName = {};
+            people.forEach(person => {
+                getName[person.name] = person;
+            });
+            
+            const allWomenHasChildren = people
+                .filter(person => getName[person.mother] != null)
+            const amountOfYearsLived = allWomenHasChildren
+                .map(person => person.born - getName[person.mother].born)
+                .reduce((previous,current) => previous + current,0)/allWomenHasChildren.length;
+            return `The average age of women is equal ${(amountOfYearsLived).toFixed(2)} years`;
+        }else{
+        //if onlyWithSon boolean flag has been passed
+            //for debugging
+            console.log('onlyWithSon was passed');
+            //the function searches all people who have children
+
+        }
+    }
+};
+
+console.log(calculateAverageAgeDiff(people));
+
