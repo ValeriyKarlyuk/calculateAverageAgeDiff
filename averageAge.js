@@ -59,7 +59,7 @@ function isFloat(number){
  */
 function calculateMenAverageAge(people, century) {
     //this variable contains total amount of years lived(difference between died and born)
-    if(people === undefined && century === undefined){
+    if(!people && !century){
         //for debugging
         console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of men');
     }else if( !Array.isArray(people) && !isNumeric(century)){
@@ -72,7 +72,7 @@ function calculateMenAverageAge(people, century) {
         }
         //figures out the average age of man 
         //without century
-        else if(century === undefined){
+        else if(!century){
             //for debugging
             console.log('century wasn\'t passed');
             const allMen = people
@@ -103,7 +103,7 @@ function calculateMenAverageAge(people, century) {
  * @return {number}  averageAgeOfWomen
  */
 function calculateWomenAverageAge(people,withChildren) {
-    if(people === undefined && withChildren === undefined){
+    if(!people && !withChildren){
         //for debugging
         console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of women');
     }else if( !Array.isArray(people) && typeof(withChildren) !== 'boolean'){
@@ -113,7 +113,7 @@ function calculateWomenAverageAge(people,withChildren) {
     else{
         //figures out the average age of women 
         //without children
-        if( withChildren === undefined){
+        if(!withChildren){
             //for debugging
             console.log('withChildren wasn\'t passed');
             const allWomen = people
@@ -148,7 +148,7 @@ function calculateWomenAverageAge(people,withChildren) {
  * @return {number} 
  */
 function calculateAverageAgeDiff(people,onlyWithSon){
-    if(people === undefined && onlyWithSon === undefined){
+    if(!people && !onlyWithSon){
         //for debugging
         console.log('Pay attention the function takes two arguments, but no arguments were passed. At least one agrument must be passed to figure out the average age of women');
     }else if( !Array.isArray(people) && typeof(onlyWithSon) !== 'boolean'){
@@ -158,7 +158,7 @@ function calculateAverageAgeDiff(people,onlyWithSon){
     else{
         //figures out the average age of women 
         //without son
-        if( onlyWithSon === undefined){
+        if(!onlyWithSon){
             //for debugging
             console.log('onlyWithSon wasn\'t passed');
             //returns all mothers who has a child(children)
@@ -183,5 +183,9 @@ function calculateAverageAgeDiff(people,onlyWithSon){
     }
 };
 
-console.log(calculateAverageAgeDiff(people));
+//console.log(calculateAverageAgeDiff(people));
+
+
+
+
 
